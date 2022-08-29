@@ -1,0 +1,92 @@
+
+<header>
+  <div class="wrapper">
+    <div class="logo">
+      <img src="https://i.postimg.cc/GpdP362Q/logo.png" alt="">
+    </div>
+    <ul class="nav-area">
+      <li><a href="" routerLink="/home" >Home</a></li>
+      <li><a href="" routerLink="/drivers">Drivers</a></li>
+      <li><a href="" routerLink="/dustbin">Dustbin</a></li>
+      <li><a href="" routerLink="/notification">Notification</a></li>
+      <li><a href="" (click)="logout()">Logout</a></li>
+    </ul>
+  </div>
+  <div class="welcome-text">
+    <!--Spinner-->
+    <div class="spinnercont">
+      <div class="toast-container position-fixed top-50 start-50 translate-middle " *ngIf="loaderShow!=false">
+        <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+              <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+            </linearGradient>
+          </defs>
+          <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round" />
+          <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
+        </svg>
+      </div>
+    </div>
+    <!--End Spinner-->
+    <h1>Drivers List</h1>
+    <table class="table-evenodd">
+      <thead>
+        <tr>
+          <th>N°</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of driversInfo">
+          <td>@twitter</td>
+          <td>@twitter</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table>
+    <!--<button class="add-button" (click)="openForm()">Add Driver</button>-->
+
+    <!--Popup Form-->
+    <div class="formadd-popup" id="myForm" *ngIf="formShow">
+      <form action="/action_page.php" class="formadd">
+        <h1>Login</h1>
+
+        <div class="row">
+          <div class="col-50">
+            <label for="first_name"><b>First Name</b></label>
+            <input type="text" placeholder="Enter first name" name="first_name" required>
+          </div>
+
+          <div class="col-50">
+            <label for="last_name"><b>Last Name</b></label>
+            <input type="text" placeholder="Enter last name" name="last_name" required>
+          </div>
+        </div>
+
+        <label for="telephone"><b>Telephone</b></label>
+        <input type="tel" placeholder="Enter telephone" name="telephone" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="email" placeholder="Enter Email" name="email" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="psw" required>
+
+        <button type="submit" class="btn">Login</button>
+        <button type="button" class="btn cancel" (click)="openForm()">Close</button>
+      </form>
+    </div>
+    <!--Popup Form-->
+
+    <div>
+      <button class="open-button">Add Place</button>
+    </div>
+    <br>
+    <div>
+      <button class="open-button" (click)="openForm()">Add Driver</button>
+    </div>
+
+  </div>
+</header>

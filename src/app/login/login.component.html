@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="body">
+
+  <div class="afterbody" id="afterbody">
+    <div class="forma-afterbody log-in-afterbody">
+      <form class="forma" [formGroup]="loginForm" (ngSubmit)="loginSubmited()">
+        <h1>Login</h1>
+        <br>
+        <input type="email" id="email" formControlName="email" placeholder="Email" />
+        <input type="password" id="password" formControlName="password" placeholder="Password" />
+        <!--Spinner-->
+        <div class="spinnercont">
+          <div class="toast-container position-fixed top-50 start-50 translate-middle " *ngIf="loaderShow!=false">
+            <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="hsl(193,90%,55%)" />
+                  <stop offset="100%" stop-color="hsl(223,90%,55%)" />
+                </linearGradient>
+              </defs>
+              <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round" />
+              <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
+            </svg>
+          </div>
+        </div>
+        <!--End Spinner-->
+        <div style="color:red" class="alert alert-danger" role="alert" *ngIf="isAuthenticated==false">
+          {{response}}
+        </div>
+        <br>
+        <a href="">Forgot your password?</a>
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+    <div class="overlay-afterbody">
+      <div class="overlay">
+        <div class="overlay-panel overlay-right">
+          <h1>MyDirt Login Form</h1>
+          <p>This Platform permits You to manage Your DIRT's</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
