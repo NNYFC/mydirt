@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { AbstractControl, FormControl, FormGroup, NgControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-location',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LocationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
+
+  }
+
+  logout(): void {
+           this.apiService.logout();
   }
 
 }

@@ -15,6 +15,7 @@ import { DriversComponent } from './drivers/drivers.component';
 import { DustbinComponent } from './dustbin/dustbin.component';
 import { NotificationComponent } from './notification/notification.component';
 import { LocationComponent } from './components/location/location.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { LocationComponent } from './components/location/location.component';
     DriversComponent,
     DustbinComponent,
     NotificationComponent,
-    LocationComponent
+    LocationComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

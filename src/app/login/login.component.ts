@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class LoginComponent implements OnInit {
   loaderShow: boolean = false;
-  timeLeft: number = 25;
+  timeLeft: number = 15;
   interval: any;
   response:any;
   userEmail: any;
@@ -62,7 +62,6 @@ export class LoginComponent implements OnInit {
                        this.router.navigate(['home']);
 
                       },error => {
-                       console.log(error.status);
                        if(error.status==0){
                                    this.response = "Please Check your Internet Connection !";
                        }

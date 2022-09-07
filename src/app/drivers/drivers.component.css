@@ -25,7 +25,6 @@ header{
 .nav-area li{
     display: inline-block;
 }
-
 .nav-area li a {
   color: #fff;
   text-decoration: none;
@@ -38,16 +37,16 @@ header{
     background: #fff;
     color: #333;
 }
-
+.active {
+  background-color: #04AA6D;
+}
 .logo{
     float: left;
 }
-
 .logo img{
     width: 100%;
     padding: 15px 0;
 }
-
 .welcome-text{
     position: absolute;
     width: 600px;
@@ -55,21 +54,18 @@ header{
     margin: 20% 30%;
     text-align: center;
 }
-
 .welcome-text h1{
     text-align: left;
     color: #fff;
     text-transform: uppercase;
     font-size: 20px;
 }
-
 .welcome-text table{
     text-align: center;
     color: #fff;
     text-transform: uppercase;
     font-size: 20px;
 }
-
 table.table-evenodd{
 	border-collapse:collapse;
 }
@@ -83,7 +79,6 @@ table.table-evenodd tbody tr:hover:nth-child(odd){
 table.table-evenodd tbody tr:hover:nth-child(even){
     background: #b2f8ff;
 }
-
 .welcome-text button{
             border: 1px solid #fff;
             padding: 10px 25px;
@@ -94,57 +89,47 @@ table.table-evenodd tbody tr:hover:nth-child(even){
             display: inline-block;
             color: #fff;
 }
-
 .welcome-text button:hover{
     background: #fff;
     color: #333;
 }
-
-/*resposive*/
-
 @media (max-width:600px){
     .wrapper {
 width: 100%;
 }
-
-.logo {
-  float: none;
-  width: 50%;
-  text-align: center;
-  margin: auto;
-}
-
-img {
-  width: ;
-}
-
-.nav-area {
-  float: none;
-  margin-top: 0;
-}
-
-.nav-area li a {
-  padding: 5px;
-  font-size: 11px;
-}
-
-.nav-area {
-  text-align: center;
-}
-
-.welcome-text {
-  width: 100%;
-  height: auto;
-  margin: 30% 0;
-}
-
 .welcome-text h1 {
   font-size: 30px;
 }
 }
-
+/* Drop down */
+.dropbtn {
+    background-color: black;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: lightgrey;
+    min-width: 200px;
+    z-index: 1;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.dropdown-content a:hover {background-color: white;}
+.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropbtn {background-color: grey;}
 /*<!-- spinner -->*/
-
 .spinnercont{
      color: white;
      padding: 16px 20px;
@@ -155,7 +140,6 @@ img {
      top: 40%;
      left: 40%;
  }
-
 * {
 	border: 0;
 	box-sizing: border-box;
@@ -180,7 +164,6 @@ body {
 main {
 	padding: 1.5em 0;
 }
-
 .pl,
 .pl__worm {
 	animation-duration: 3s;
@@ -200,8 +183,6 @@ main {
 	animation-name: worm;
 	animation-timing-function: cubic-bezier(0.42,0.17,0.75,0.83);
 }
-
-/* Dark theme */
 @media (prefers-color-scheme: dark) {
 	:root {
 		--bg: hsl(var(--hue),10%,10%);
@@ -211,8 +192,6 @@ main {
 		stroke: hsla(var(--hue),10%,90%,0.1);
 	}
 }
-
-/* Animations */
 @keyframes bump {
 	from,
 	42%,
@@ -243,10 +222,7 @@ main {
 	25% { stroke-dashoffset: 295; }
 	to { stroke-dashoffset: 1165; }
 }
-
 /* form add */
-
-/* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
   background-color: #555;
   color: white;
@@ -259,9 +235,6 @@ main {
   right: 28px;
   width: 280px;
 }
-
-
-/* The popup form - hidden by default */
 .formadd-popup {
   background-color: #555;
   color: white;
@@ -273,15 +246,11 @@ main {
   bottom: 20px;
   left: 40%;
 }
-
-/* Add styles to the form container */
 .formadd {
   max-width: 300px;
   padding: 10px;
   background-color: #555;
 }
-
-/* Full-width input fields */
 .formadd input[type=text], .formadd input[type=tel], .formadd input[type=email], .formadd input[type=password]  {
   width: 100%;
   padding: 15px;
@@ -289,14 +258,10 @@ main {
   border: none;
   background: #f1f1f1;
 }
-
-/* When the inputs get focus, do something */
 .formadd input[type=text]:focus, .formadd input[type=tel]:focus, .formadd input[type=email]:focus, .formadd input[type=password]:focus {
   background-color: #ddd;
   outline: none;
 }
-
-/* Set a style for the submit/login button */
 .formadd .btn {
   background-color: #04AA6D;
   color: white;
@@ -307,28 +272,20 @@ main {
   margin-bottom:10px;
   opacity: 0.8;
 }
-
-/* Add a red background color to the cancel button */
 .formadd .cancel {
   background-color: red;
 }
-
-/* Add some hover effects to buttons */
 .formadd .btn:hover, .open-button:hover {
   opacity: 1;
 }
-
-/* addition to display inputs in rows */
-
 .row {
-  display: -ms-flexbox; /* IE10 */
+  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
+  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin: 0 -16px;
 }
-
 .col-50 {
-  -ms-flex: 50%; /* IE10 */
+  -ms-flex: 50%;
   flex: 50%;
 }

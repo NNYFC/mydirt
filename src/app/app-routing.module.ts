@@ -7,6 +7,7 @@ import {HomeComponent} from './home/home.component';
 import {DriversComponent} from './drivers/drivers.component';
 import {DustbinComponent} from './dustbin/dustbin.component';
 import {NotificationComponent} from './notification/notification.component';
+import {ProfileComponent} from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
       path:'notification',
       component:NotificationComponent
+  },
+  {
+      path:'profile',
+      component:ProfileComponent
   }
 ];
 

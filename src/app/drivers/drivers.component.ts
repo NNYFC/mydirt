@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
+import { AbstractControl, FormControl, FormGroup, NgControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-drivers',
@@ -8,7 +9,8 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./drivers.component.css']
 })
 export class DriversComponent implements OnInit {
-  driversInfo:Array<any> = [];
+  driversInfo:any = [];
+  userInfo:any=[];
   userEmail: any;
   userPassword: any;
   loaderShow: boolean = false;
@@ -28,10 +30,15 @@ export class DriversComponent implements OnInit {
         this.driverServices
           .getAllDrivers(this.userEmail,this.userPassword)
           .subscribe((response) => {
-          console.log(response);
-            this.driversInfo.push(response);
+            this.driversInfo = response;
             this.loaderShow = false;
             this.pauseTimer();
+          });
+
+        this.driverServices
+                  .getUserInfoByEmail(this.userEmail,this.userPassword)
+                  .subscribe((response) => {
+                    this.userInfo = response;
           });
   }
 
@@ -62,8 +69,85 @@ export class DriversComponent implements OnInit {
       }
 
   logout(): void {
-         sessionStorage.setItem('isLoggedIn', 'false');
-         sessionStorage.clear();
-         this.router.navigate(['login']);
-       }
+           this.driverServices.logout();
+    }
+
+  addUserForm = new FormGroup({
+          sex: new FormControl('', [Validators.required]),
+          last_name: new FormControl('', [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.pattern('[a-zA-Z].*'),
+          ]),
+          first_name: new FormControl('', [
+            Validators.required,
+            Validators.minLength(2),
+            Validators.pattern('[a-zA-Z].*'),
+          ]),
+          email: new FormControl('', [Validators.required, Validators.email]),
+          password: new FormControl('', [
+              Validators.required,
+              Validators.minLength(4),
+              Validators.maxLength(15),
+            ]),
+          telephone: new FormControl(''),
+      });
+
+  get Sex(): FormControl {
+            return this.addUserForm.get('sex') as FormControl;
+     }
+
+  get Lastname(): FormControl {
+            return this.addUserForm.get('last_name') as FormControl;
+     }
+
+  get Firstname(): FormControl {
+            return this.addUserForm.get('first_name') as FormControl;
+     }
+
+  get Password(): FormControl {
+            return this.addUserForm.get('password') as FormControl;
+     }
+
+  get Email(): FormControl {
+            return this.addUserForm.get('email') as FormControl;
+     }
+
+  get Telephone(): FormControl {
+            return this.addUserForm.get('telephone') as FormControl;
+     }
+
+  get f(): { [key: string]: AbstractControl } {
+            return this.addUserForm.controls;
+     }
+
+    userSubmited(): void {
+        this.loaderShow = true;
+            this.startTimer();
+
+            this.driverServices
+              .addDriver(this.userEmail,this.userPassword,[
+                this.addUserForm.value.first_name,
+                this.addUserForm.value.last_name,
+                this.addUserForm.value.telephone,
+                this.addUserForm.value.email,
+                this.addUserForm.value.password,
+                'ACTIF',
+               this.userInfo.idadmin
+              ])
+              .subscribe(resp => {
+                this.formShow = false;
+                this.driverServices
+                        .getAllDrivers(this.userEmail,this.userPassword)
+                              .subscribe((res) => {
+                                    this.driversInfo = res;
+                                    this.pauseTimer();
+                                    this.loaderShow = false;
+                                  });
+              });
+    }
+
+
+
+
 }

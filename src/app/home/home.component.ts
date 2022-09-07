@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { AbstractControl, FormControl, FormGroup, NgControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -8,14 +10,13 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
 
   logout(): void {
-         sessionStorage.setItem('isLoggedIn', 'false');
-         sessionStorage.clear();
-         this.router.navigate(['login']);
-       }
+         this.apiService.logout();
+  }
+
 }
