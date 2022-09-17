@@ -17,6 +17,7 @@ export class DriversComponent implements OnInit {
   timeLeft: number = 25;
   interval: any;
   formShow: boolean = false;
+  userType:any;
 
   constructor(private router: Router,private driverServices: ApiService) { }
 
@@ -26,6 +27,7 @@ export class DriversComponent implements OnInit {
 
         this.userEmail= sessionStorage.getItem('emailvalue');
         this.userPassword= sessionStorage.getItem('passwordvalue');
+        this.userType = sessionStorage.getItem('userTypevalue');
 
         this.driverServices
           .getAllDrivers(this.userEmail,this.userPassword)
@@ -145,9 +147,23 @@ export class DriversComponent implements OnInit {
                                     this.loaderShow = false;
                                   });
               });
-    }
+  }
 
-
+  changeState(id:any){
+    this.loaderShow = true;
+    this.startTimer();
+    this.driverServices
+              .changeDriverState(this.userEmail,this.userPassword,id)
+              .subscribe((response) => {
+                this.driverServices
+                           .getAllDrivers(this.userEmail,this.userPassword)
+                           .subscribe((res) => {
+                                         this.driversInfo = res;
+                                         this.pauseTimer();
+                                         this.loaderShow = false;
+                                     });
+              });
+  }
 
 
 }

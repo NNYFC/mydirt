@@ -1,4 +1,7 @@
-
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <header>
   <div class="wrapper">
     <div class="logo">
@@ -13,14 +16,14 @@
           </svg>
         </a>
       </li>
-      <li>
+      <li *ngIf="userType == 'admin'">
         <a href="" routerLink="/drivers">Drivers
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-car-front-fill" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M2.52 3.515A2.5 2.5 0 0 1 4.82 2h6.362c1 0 1.904.596 2.298 1.515l.792 1.848c.075.175.21.319.38.404.5.25.855.715.965 1.262l.335 1.679c.033.161.049.325.049.49v.413c0 .814-.39 1.543-1 1.997V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.338c-1.292.048-2.745.088-4 .088s-2.708-.04-4-.088V13.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1.892c-.61-.454-1-1.183-1-1.997v-.413a2.5 2.5 0 0 1 .049-.49l.335-1.68c.11-.546.465-1.012.964-1.261a.807.807 0 0 0 .381-.404l.792-1.848ZM3 10a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm10 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM6 8a1 1 0 0 0 0 2h4a1 1 0 1 0 0-2H6ZM2.906 5.189l.956-1.913A.5.5 0 0 1 4.309 3h7.382a.5.5 0 0 1 .447.276l.956 1.913a.51.51 0 0 1-.497.731c-.91-.073-3.35-.17-4.597-.17-1.247 0-3.688.097-4.597.17a.51.51 0 0 1-.497-.731Z"/>
           </svg>
         </a>
       </li>
-      <li>
+      <li *ngIf="userType == 'admin'">
         <a href="" routerLink="/dustbin">Dustbin
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
             <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
@@ -57,30 +60,42 @@
   </div>
   <div class="welcome-text">
 
+    <div>
+      <button (click)="refreshData()" class="open-button1">Refresh</button>
+    </div>
     <!--Spinner-->
-    <div class="spinnercont">
-      <div class="toast-container position-fixed top-50 start-50 translate-middle " *ngIf="loaderShow!=false">
-        <svg class="pl" viewBox="0 0 128 128" width="128px" height="128px" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="pl-grad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="hsl(193,90%,55%)" />
-              <stop offset="100%" stop-color="hsl(223,90%,55%)" />
-            </linearGradient>
-          </defs>
-          <circle class="pl__ring" r="56" cx="64" cy="64" fill="none" stroke="hsla(0,10%,10%,0.1)" stroke-width="16" stroke-linecap="round" />
-          <path class="pl__worm" d="M92,15.492S78.194,4.967,66.743,16.887c-17.231,17.938-28.26,96.974-28.26,96.974L119.85,59.892l-99-31.588,57.528,89.832L97.8,19.349,13.636,88.51l89.012,16.015S81.908,38.332,66.1,22.337C50.114,6.156,36,15.492,36,15.492a56,56,0,1,0,56,0Z" fill="none" stroke="url(#pl-grad)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="44 1111" stroke-dashoffset="10" />
-        </svg>
+    <div *ngIf="loaderShow!=false" class="d-flex justify-content-center">
+      <div class="spinner-border text-success" style="width: 6rem; height: 6rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
     <!--End Spinner-->
 
     <h1>List of Notifications</h1>
     <br>
-    <table class="table-evenodd">
+    <table *ngIf="userType != 'admin'" class="table-evenodd">
       <thead>
       <tr>
         <th>N°</th>
-        <th>Message</th>
+        <th>Send Date</th>
+        <th>Dustbin</th>
+        <th>Place</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let drivernotification of drivernotificationList;let i = index">
+        <td>{{i+1}}</td>
+        <td>{{drivernotification.date_asign}}</td>
+        <td>{{drivernotification.iddustbin.dustbin_name}}</td>
+        <td>{{drivernotification.iddustbin.idplace.place_name}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <table *ngIf="userType == 'admin'" class="table-evenodd">
+      <thead>
+      <tr>
+        <th>N°</th>
         <th>Send date</th>
         <th>Place</th>
         <th>Images</th>
@@ -89,39 +104,57 @@
       <tbody>
       <tr *ngFor="let notification of notificationList;let i = index">
         <td>{{i+1}}</td>
-        <td>{{notification.message}}</td>
         <td>{{notification.datesend}}</td>
         <td>{{notification.idplace.place_name}}</td>
         <td>
-          <img *ngFor="let image of notification.picturesCollection;let j = index" class="imgpic" src={{image.picture}} />
+          <svg  (click)="getMsgDetails(notification)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+          </svg>
         </td>
       </tr>
       </tbody>
     </table>
 
-    <div>
-      <button class="open-button1">Send Notification</button>
+    <!--Popup Form-->
+    <div class="formadd-popup" id="myForm" *ngIf="detailsShow">
+      <form class="formadd" >
+        <h2>Add A Dustbin</h2>
+
+        <label for="message"><b>Message</b></label>
+        <div>{{selectedNotification.message}}</div>
+        <br>
+        <label for="image"><b>Images</b></label>
+        <br>
+        <img *ngFor="let image of imageList;let j = index" class="imgpic" src={{image.picture}} />
+
+        <button type="button" class="btn cancel" (click)="closeDetail()">Close</button>
+      </form>
     </div>
-    <br>
-    <div>
+    <!--Popup Form-->
+
+    <div *ngIf="userType == 'admin'">
       <button class="open-button" (click)="openForm()">Asign Dustbin to Driver</button>
     </div>
 
     <!--Popup Form-->
     <div class="formadd-popup" id="myForm" *ngIf="formShow">
-      <form class="formadd"  [formGroup]="addUserForm" (ngSubmit)="userSubmited()">
+      <form class="formadd"  [formGroup]="asignDriverForm" (ngSubmit)="asignSubmited()">
         <h2>Add A Dustbin</h2>
 
-        <label for="telephone"><b>Telephone</b></label>
-        <input type="tel" formControlName="telephone" placeholder="Enter telephone" name="telephone" required>
-
-        <label for="email"><b>Email</b></label>
-        <input type="email" formControlName="email" placeholder="Enter Email" name="email" required>
-
-        <label for="psw"><b>Password</b></label>
-        <input type="password" formControlName="password" placeholder="Enter Password" name="psw" required>
-
-        <button type="submit" class="btn">Add</button>
+        <label for="driver"><b>Driver</b></label>
+        <select name="dog-names" id="dog-names" formControlName="iddriver">
+          <option *ngFor="let driver of driverList" value="{{driver.iddriver}}">{{driver.first_name}} {{driver.last_name}}</option>
+        </select>
+        <br>
+        <br>
+        <label for="dustbin"><b>Dustbin</b></label>
+        <select name="dog-names" id="dog-names" formControlName="iddustbin">
+          <option *ngFor="let dustbin of dustbinList" value="{{dustbin.iddustbin}}">{{dustbin.dustbin_name}}</option>
+        </select>
+        <br>
+        <br>
+        <button type="submit" class="btn">Asign</button>
         <button type="button" class="btn cancel" (click)="openForm()">Close</button>
       </form>
     </div>

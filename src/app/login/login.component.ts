@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   response:any;
   userEmail: any;
   userPassword: any;
+  userType:any;
 
   constructor(private router: Router, private loginAuth: ApiService) { }
 
@@ -48,13 +49,20 @@ export class LoginComponent implements OnInit {
         .loginUser(this.loginForm.value.email,this.loginForm.value.password)
         .subscribe((res) => {
                         this.errorResponse = res;
-                        console.log('Error '+this.errorResponse);
 
                        var crud = btoa(this.loginForm.value.email + ':' + this.loginForm.value.password);
                        this.userEmail = this.loginForm.value.email;
+                       this.userPassword = this.loginForm.value.password;
                        sessionStorage.setItem('authvalue', crud);
                        sessionStorage.setItem('emailvalue', this.userEmail);
                        sessionStorage.setItem('passwordvalue', this.userPassword);
+                       if(this.userEmail == 'admin@admin.com'){
+                        this.userType = 'admin';
+                       }else{
+                        this.userType = 'driver';
+                        sessionStorage.setItem('userId',this.errorResponse.iddriver)
+                       }
+                       sessionStorage.setItem('userTypevalue', this.userType);
 
                        this.pauseTimer();
                        this.loaderShow = false;
@@ -68,7 +76,7 @@ export class LoginComponent implements OnInit {
                        if(error.status==401){
                                    this.response = "Wrong Email or Password!";
                        }
-                       if(error.status==200){
+                       /* if(error.status==200){
                                  var crud = btoa(this.loginForm.value.email + ':' + this.loginForm.value.password);
                                  this.userEmail = this.loginForm.value.email;
                                  this.userPassword = this.loginForm.value.password;
@@ -81,7 +89,7 @@ export class LoginComponent implements OnInit {
                                   this.response = "Successfully Authenticated";
 
                                   this.router.navigate(['home']);
-                       }
+                       } */
                        this.isAuthenticated = false;
                        this.pauseTimer();
                        this.loaderShow = false;

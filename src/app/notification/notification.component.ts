@@ -10,6 +10,10 @@ import { AbstractControl, FormControl, FormGroup, NgControl, Validators } from '
 })
 export class NotificationComponent implements OnInit {
   notificationList:any=[];
+  drivernotificationList:any=[];
+  driverList:any=[];
+  dustbinList:any=[];
+  selectedNotification:any=[];
   imageList:any=[];
   loaderShow: boolean = false;
   timeLeft: number = 15;
@@ -17,27 +21,78 @@ export class NotificationComponent implements OnInit {
   userEmail:any;
   userPassword:any;
   formShow: boolean = false;
+  detailsShow: boolean = false;
+  userType:any;
+  userId:any;
 
   constructor(private router: Router,private notificationServices: ApiService) { }
 
   ngOnInit(): void {
-    this.userEmail= sessionStorage.getItem('emailvalue');
+        this.userEmail= sessionStorage.getItem('emailvalue');
         this.userPassword= sessionStorage.getItem('passwordvalue');
+        this.userType = sessionStorage.getItem('userTypevalue');
         this.loaderShow = true;
         this.startTimer();
-        this.notificationServices.getAllNotification(this.userEmail,this.userPassword).subscribe(
-          (res) => {
-            console.log(res);
-            this.notificationList = res;
-            this.pauseTimer();
-            this.loaderShow = false;
-          }
-        );
+        this.refreshData();
+
+  }
+
+  refreshData(): void{
+    if(this.userType == 'admin'){
+              this.notificationServices.getAllNotification(this.userEmail,this.userPassword).subscribe(
+                      (res) => {
+                        this.notificationList = res;
+                        this.pauseTimer();
+                        this.loaderShow = false;
+                      }
+              );
+
+              this.notificationServices.getAllDrivers(this.userEmail,this.userPassword).subscribe(
+                                    (res) => {
+                                      this.driverList = res;
+                                    }
+               );
+              this.notificationServices.getAllDustbin(this.userEmail,this.userPassword).subscribe(
+                                                  (res) => {
+                                                    this.dustbinList = res;
+                                      }
+              );
+            }else{
+              this.userId = sessionStorage.getItem('userId');
+              this.notificationServices.getAllDustbinOfDriver(this.userEmail,this.userPassword,this.userId).subscribe(
+                        (res) => {
+                          console.log(res);
+                          this.drivernotificationList = res;
+                          this.pauseTimer();
+                          this.loaderShow = false;
+                        }
+                      );
+         }
+  }
+
+  getMsgDetails(item:any): void{
+    this.loaderShow = true;
+    this.startTimer();
+    this.selectedNotification = item;
+    this.notificationServices.getPictureById(this.userEmail,this.userPassword,this.selectedNotification.idnotification)
+                             .subscribe((res) => {
+                              console.log(res);
+                              this.imageList = res;
+                              this.pauseTimer();
+                              this.loaderShow = false;
+                              this.detailsShow = true;
+                            }
+     );
+
+  }
+
+  closeDetail():void{
+    this.detailsShow = false;
   }
 
   logout(): void {
-             this.notificationServices.logout();
-      }
+        this.notificationServices.logout();
+  }
 
   startTimer() {
           this.interval = setInterval(() => {
@@ -55,86 +110,52 @@ export class NotificationComponent implements OnInit {
          clearInterval(this.interval);
     }
 
-    openForm(){
+  openForm(){
         if(this.formShow == false){
           this.formShow = true;
         }else{
           this.formShow = false;
         }
+  }
 
-        console.log(this.formShow);
-      }
-
-
-      addUserForm = new FormGroup({
-              last_name: new FormControl('', [
-                Validators.required,
-                Validators.minLength(2),
-                Validators.pattern('[a-zA-Z].*'),
-              ]),
-              first_name: new FormControl('', [
-                Validators.required,
-                Validators.minLength(2),
-                Validators.pattern('[a-zA-Z].*'),
-              ]),
-              email: new FormControl('', [Validators.required, Validators.email]),
-              password: new FormControl('', [
+  asignDriverForm = new FormGroup({
+                iddriver: new FormControl('', [
                   Validators.required,
-                  Validators.minLength(4),
-                  Validators.maxLength(15),
+                  Validators.minLength(2),
+                  Validators.pattern('[a-zA-Z].*'),
                 ]),
-              telephone: new FormControl(''),
-          });
+                iddustbin: new FormControl('', [
+                  Validators.required,
+                  Validators.minLength(2),
+                  Validators.pattern('[a-zA-Z].*'),
+                ])
+     });
 
-      get Lastname(): FormControl {
-                return this.addUserForm.get('last_name') as FormControl;
-         }
+     get Iddriver(): FormControl {
+                  return this.asignDriverForm.get('iddriver') as FormControl;
+           }
 
-      get Firstname(): FormControl {
-                return this.addUserForm.get('first_name') as FormControl;
-         }
-
-      get Password(): FormControl {
-                return this.addUserForm.get('password') as FormControl;
-         }
-
-      get Email(): FormControl {
-                return this.addUserForm.get('email') as FormControl;
-         }
-
-      get Telephone(): FormControl {
-                return this.addUserForm.get('telephone') as FormControl;
-         }
+     get Iddustbin(): FormControl {
+                  return this.asignDriverForm.get('iddustbin') as FormControl;
+           }
 
       get f(): { [key: string]: AbstractControl } {
-                return this.addUserForm.controls;
-         }
+                    return this.asignDriverForm.controls;
+             }
 
-        userSubmited(): void {
-            this.loaderShow = true;
-                this.startTimer();
+  asignSubmited():void{
+      this.loaderShow = true;
+      this.startTimer();
+      this.notificationServices
+          .aSignDustbinToDriver(this.userEmail,this.userPassword,[
+                  this.asignDriverForm.value.iddustbin,this.asignDriverForm.value.iddriver
+               ]).subscribe(resp => {
+                      this.loaderShow = false;
+                      this.formShow = false;
+                      this.pauseTimer();
 
-                this.notificationServices
-                  .addDriver(this.userEmail,this.userPassword,[
-                    this.addUserForm.value.first_name,
-                    this.addUserForm.value.last_name,
-                    this.addUserForm.value.telephone,
-                    this.addUserForm.value.email,
-                    this.addUserForm.value.password,
-                    'ACTIF',
-                    1
-                  ])
-                  .subscribe(resp => {
-                    this.formShow = false;
-                    this.notificationServices
-                            .getAllDrivers(this.userEmail,this.userPassword)
-                                  .subscribe((res) => {
-                                        this.notificationList.push(res);
-                                        this.pauseTimer();
-                                        this.loaderShow = false;
-                                      });
-                  });
-        }
+                });
+  }
 
 
 

@@ -88,13 +88,11 @@ input {
 	top: 0;
 	height: 100%;
 }
-
 .log-in-afterbody {
 	left: 0;
 	width: 50%;
 	z-index: 2;
 }
-
 
 .overlay-afterbody {
 	position: absolute;
@@ -103,8 +101,6 @@ input {
 	width: 50%;
 	height: 100%;
 }
-
-
 .overlay {
 	background: #04AA6D;;
 	background: -webkit-linear-gradient(to right, #04AA6D;, #04AA6D;);
@@ -131,7 +127,6 @@ input {
 	height: 100%;
 	width: 50%;
 }
-
 
 .overlay-right {
 	right: 0;

@@ -9,14 +9,16 @@ import { AbstractControl, FormControl, FormGroup, NgControl, Validators } from '
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  userType:any;
 
   constructor(private router: Router, private apiService: ApiService) { }
 
   ngOnInit(): void {
+    this.userType = sessionStorage.getItem('userTypevalue');
   }
 
   logout(): void {
-         this.apiService.logout();
+      this.apiService.logout();
   }
 
 }

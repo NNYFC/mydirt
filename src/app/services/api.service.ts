@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -19,17 +18,18 @@ export class ApiService {
          sessionStorage.removeItem('authvalue');
          sessionStorage.removeItem('emailvalue');
          sessionStorage.removeItem('passwordvalue');
+         sessionStorage.removeItem('userTypevalue');
 
          sessionStorage.clear();
          this.router.navigate(['login']);
-    }
+  }
 
   loginUser(username: any, password: any) {
       const headers = new HttpHeaders({
         Authorization: 'Basic ' + btoa(username + ':' + password),
       });
 
-      return this.http.get(this.baseServerUrl + 'login', {
+      return this.http.get(this.baseServerUrl + 'login/'+username, {
         headers,
       });
   }
@@ -220,6 +220,39 @@ export class ApiService {
                      headers,
                   });
  }
+
+ getAllDustbinOfDriver(username: any, password: any,id:any) {
+                   const headers = new HttpHeaders({
+                       Authorization: 'Basic ' + btoa(username + ':' + password),
+                    });
+
+                    return this.http.get(this.baseServerUrl + 'user/dustbins/'+id,
+                    {
+                      headers,
+                   });
+  }
+
+ changeDriverState(username: any, password: any,id:any) {
+                    const headers = new HttpHeaders({
+                        Authorization: 'Basic ' + btoa(username + ':' + password),
+                     });
+
+                     return this.http.get(this.baseServerUrl + 'admin/driver/'+id,
+                     {
+                       headers,
+                    });
+  }
+
+ getPictureById(username: any, password: any,id:any) {
+                      const headers = new HttpHeaders({
+                          Authorization: 'Basic ' + btoa(username + ':' + password),
+                       });
+
+                       return this.http.get(this.baseServerUrl + 'admin/notifications/'+id+'/pictures',
+                       {
+                         headers,
+                      });
+    }
 
 
 }
